@@ -126,8 +126,9 @@ body{
     min-height: 100%;
     overflow: hidden;
     position: relative;
-    &.in-process{
-    }
+}
+.page{
+    flex: 1 1 auto;
 }
 
 .loading{
@@ -753,5 +754,20 @@ body{
         font-size: 1rem;
     }
 }
-.confirm-order-btn {
+
+//!FOOTER
+.attribution {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1rem;
+    background-color: #c9aea6;
+    & a{
+        color: #ffffff;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
 }
