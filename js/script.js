@@ -370,7 +370,7 @@ function createOrder(
     itemPrice,
     id
 ) {    
-    const orderRemove__SRC = `/assets/images/icon-remove-item.svg`;
+    const orderRemove__SRC = `assets/images/icon-remove-item.svg`;
 
     const order = document.createElement("article");
     const orderDescription = document.createElement("div");
