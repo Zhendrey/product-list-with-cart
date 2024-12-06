@@ -1,7 +1,5 @@
 import { renderContent } from "./functions.js";
-
-const tabletWidth = 768;
-const mobileWidth = 425;
+import { generateOptionObj } from "./functions.js";
 
 //!DESERTS
 let jsonItems;
@@ -21,27 +19,13 @@ const cartTitle__SPAN = document.querySelector(".cart__title span");
 options.forEach((item, index)=>{
     item.id = index
 })
-function generateOptionObj(parent){
-    let optionsData = [];
-    for (let i = 0; i < parent.length; i++) {
-        optionsData.push(
-            {
-            id: i,
-            qty: 0,
-            clicks: 0,
-        }
-    )
-}
-return optionsData;
-}
+
 
 const dataOptions = generateOptionObj(options);
- 
 
 let orderTitle;
 let infoQty;
 let infoPrice__SPAN;
-let singlePrices__ARRAY = document.querySelectorAll('.info__price span');
 const totalPrice = document.querySelector(".total__price");
 
 document.querySelector(".options").addEventListener("click", function(event) {
@@ -370,7 +354,7 @@ function createOrder(
     itemPrice,
     id
 ) {    
-    const orderRemove__SRC = `assets/images/icon-remove-item.svg`;
+    const orderRemove__SRC = `/assets/images/icon-remove-item.svg`;
 
     const order = document.createElement("article");
     const orderDescription = document.createElement("div");
