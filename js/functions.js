@@ -66,3 +66,17 @@ export function renderContent(
         [...prices][index].textContent = `$${data[index].price.toFixed(2)}`;
     })
 }
+
+export function generateOptionObj(parent){
+    let optionsData = [];
+    for (let i = 0; i < parent.length; i++) {
+        optionsData.push(
+            {
+            id: i,
+            qty: 0,
+            clicks: 0,
+        }
+    )
+}
+return optionsData;
+}
