@@ -216,7 +216,6 @@ body{
     }
 }
 .options {
-    // display: grid;
     &__option {
         padding: 0.4375rem;
         font-weight: 700;
@@ -265,7 +264,6 @@ body{
         gap: 9px;
         transition: all 0.5s ease 0s;
         &:hover{
-            // text-decoration: underline;
             transform: translate(0, -50%) scale(1.05);
         }
         .add-to-cart__change{
@@ -323,11 +321,6 @@ body{
     align-items: center;
     position: relative;
     z-index: 2;
-    &__icon {
-    }
-
-    &__text {
-    }
     &__minus,
     &__plus{
         &:hover{
@@ -374,6 +367,9 @@ body{
     }
 
     &__orders {
+        max-height: 18.75rem;
+        padding: 0 0.3125rem 0 0;
+        overflow: auto;
         flex-direction: column;
         gap: 20px;
         margin: 0 0 1.8125rem 0;
@@ -500,13 +496,9 @@ body{
 }
 .info {
     display: flex;
-    // &.active{
-    //     display: flex;
-    // }
     &__quantity {
         font-size: 0.8438rem;
         margin: 0 0.9375rem 0 0;
-        // color: $rose-500;
     }
 
     &__prices {
@@ -546,9 +538,6 @@ body{
     &.active{
         display: flex;
     }
-    &__icon {
-    }
-
     &__text {
         font-size: 0.825rem;
     }
@@ -640,9 +629,6 @@ body{
         font-weight: 700;
     }
 
-    &__text {
-    }
-
     &__orders {
         background-color: #fcf9f7;
         padding: 1.25rem;
@@ -651,9 +637,6 @@ body{
 
     &__start-new-order {
         cursor: pointer;
-        &:hover{
-
-        }
     }
 }
 .orders-confirmed {
@@ -671,9 +654,6 @@ body{
         display: flex;
         justify-content: space-between;
         align-items: center;
-    }
-    &__total-title {
-
     }
     &__total-price{
         font-size: 1.25rem;
@@ -731,10 +711,6 @@ body{
         font-weight: 700;
     }
 
-    &__amount {
-        
-    }
-
     
     &__quantity,
     &__single-price {
@@ -745,9 +721,6 @@ body{
     &__quantity{
         color: #C56B4F;
         margin: 0 0.384em 0 0;
-    }
-
-    &__single-price {
     }
 
     &__total {

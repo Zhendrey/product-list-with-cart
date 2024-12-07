@@ -49,8 +49,6 @@ document.querySelector(".options").addEventListener("click", function(event) {
         dataOptions[option.id].clicks++;
     }
 
-    const orderIfnoQty = document.querySelectorAll(".info__quantity");
-    
     const selectedOrder = document.getElementById(`${dataOptions[option.id].id}-cart`);
     const selectedOrder__qty = selectedOrder.querySelector(".info__quantity");
     const selectedOrder__totalPrice = selectedOrder.querySelector(".info__price span");
@@ -65,29 +63,41 @@ document.querySelector(".options").addEventListener("click", function(event) {
         quantity[option.id].textContent = dataOptions[option.id].qty;
         selectedOrder__qty.textContent = dataOptions[option.id].qty + 'x';
     }
-    
-    
         const totalOrderPrice = (jsonItems[option.id].price * dataOptions[option.id].qty).toFixed(2);
         selectedOrder__totalPrice.textContent = totalOrderPrice;
     
-        const infoPrice__SPAN = document.getElementsByClassName("info__price");
+        const infoPrice__SPAN = document.querySelectorAll(".info__price span");
         let priceTotal = 0;
         
 
         for (const element of infoPrice__SPAN) {
-            const spanElem = element.querySelector("span");
-            priceTotal += Number(spanElem.textContent);
+            priceTotal += Number(element.textContent);
         }
         
         totalPrice.textContent = '$' + priceTotal.toFixed(2);
     
     const deletedOrder = selectedOrder.querySelector(".order__remove");
 
-    
-    let sum = 0;
+    let sum = dataOptions.reduce((storage, current)=>{
+        return storage + current.qty;
+    }, 0)
 
-    for (const value of dataOptions) {
-        sum += value.qty;
+    function updateSum(sum){
+        sum = dataOptions.reduce((storage, current)=>{
+            return storage + current.qty
+        }, 0)
+        cartTitle__SPAN.textContent = sum;
+        if(sum === 0){
+            removeCartWindow();
+        }
+    }
+
+    function removeCartWindow(){
+        orders.classList.remove("active");
+        reminder.classList.remove("active");
+        total.classList.remove("active");
+        confirmOrder.classList.remove("active");
+        emptyCart.classList.add("active");
     }
     function updateOrdersAmount(){
         for (const value of dataOptions) {
@@ -96,28 +106,22 @@ document.querySelector(".options").addEventListener("click", function(event) {
     }
 
     function updateTotal() {
-        for (const element of infoPrice__SPAN) {
-            const spanElem = element.querySelector("span");
-            priceTotal += Number(spanElem.textContent);
-        }
+        const textPrices = document.querySelectorAll(".info__price span");
+        const total = [...textPrices].reduce((storage, current)=>{
+            const price = current.textContent;
+            const currentTotal = storage + Number(price);
+            return currentTotal;
+        }, 0)
+        totalPrice.textContent = `$${total.toFixed(2)}`;
     }
     
     deletedOrder.addEventListener("click", function(event) {
-        const oldOrderAmount = Number(quantity[option.id].textContent);
         dataOptions[option.id].qty = 0;
         dataOptions[option.id].clicks = 0;
-        sum -= oldOrderAmount;
-        updateTotal();
-        cartTitle__SPAN.textContent = sum;
+        updateSum(sum);
         targetElem.classList.remove("active");
         removeOrder(selectedOrder.closest(".order"));
-        if(sum === 0){
-            orders.classList.remove("active");
-            reminder.classList.remove("active");
-            total.classList.remove("active");
-            confirmOrder.classList.remove("active");
-            emptyCart.classList.add("active");
-        }
+        updateTotal();
     })
     if(dataOptions[option.id].qty == 0){
         dataOptions[option.id].clicks = 0;
@@ -148,17 +152,7 @@ document.querySelector(".options").addEventListener("click", function(event) {
     cartTitle__SPAN.textContent = sum;
 })
 
-const orderItem = document.querySelectorAll(".order");
 
-
-
-//FUNCTONS
-
-function getOrder(option, order){
-    for (let value of order) {
-        return value;
-    }
-}
 
 const data = new XMLHttpRequest();
     async function render(){
@@ -263,7 +257,7 @@ function renderFinalOrder(allOrders, data, dataOptions){
         orderPricesContents.push(Number(element.textContent));
     }
     totalConfirmedPrice.textContent = totalPrice.textContent;
-    allOrderIds.forEach((item, index)=>{
+    allOrderIds.forEach(item =>{
         createFinalOrder(data, item, dataOptions, orderPricesContents);
     })
 }
@@ -332,8 +326,6 @@ orders.addEventListener("click", function(event){
             return item.name == orderTitle.textContent;
         })
         event.target.closest(".order").remove();
-    }else{
-         
     }
 })
 
@@ -393,7 +385,7 @@ function createOrder(
         orderRemove__IMAGE.src = orderRemove__SRC;
         orderRemove__IMAGE.alt = 'reomve item';
     
-            orders.prepend(order);
+            orders.append(order);
             order.appendChild(orderDescription);
             orderDescription.appendChild(orderTitle);
             orderDescription.append(orderInfo);
